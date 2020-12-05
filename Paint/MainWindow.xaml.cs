@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Paint.ViewModel;
 
 namespace Paint
 {
@@ -20,9 +21,13 @@ namespace Paint
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel mainView;
+
         public MainWindow()
         {
             InitializeComponent();
+            mainView = new MainViewModel();
+            DataContext = mainView;
         }
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)

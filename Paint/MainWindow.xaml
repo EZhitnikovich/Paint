@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         MinHeight="450" MinWidth="800"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None">
+        WindowStyle="None"
+        ResizeMode="NoResize">
     <Grid Background="{StaticResource WorkSpaceBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -24,13 +25,13 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                         Style="{StaticResource StackPanelBar}">
-                <Button ToolTip="Minimize">
+                <Button ToolTip="Minimize" Command="{Binding MinimizeCommand}">
                     <Image Source="Images/window-minimize.png"/>
                 </Button>
-                <Button ToolTip="Maximize">
+                <Button ToolTip="Maximize" Command="{Binding MaximizeCommand}">
                     <Image Source="Images/window-maximize.png"/>
                 </Button>
-                <Button ToolTip="Power">
+                <Button ToolTip="Close" Command="{Binding CloseCommand}">
                     <Image Source="Images/power.png"/>
                 </Button>
             </StackPanel>
