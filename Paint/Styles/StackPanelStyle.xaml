@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Paint.Styles">
+    <Style TargetType="StackPanel" x:Key="StackPanelBar">
+        <Style.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource MinimizedButton}"/>
+            <Style TargetType="ComboBox">
+                <Setter Property="Margin" Value="2,0,2,0"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="MinWidth" Value="46"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+</ResourceDictionary>
