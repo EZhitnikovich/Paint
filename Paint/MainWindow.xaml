@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Paint" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Paint"
         mc:Ignorable="d"
         MinHeight="450" MinWidth="800"
         WindowStartupLocation="CenterScreen"
@@ -25,13 +25,13 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
                         Style="{StaticResource StackPanelBar}">
                 <Button ToolTip="Minimize">
-                    <materialDesign:PackIcon Kind="WindowMinimize"/>
+                    <Image Source="Images/window-minimize.png"/>
                 </Button>
                 <Button ToolTip="Maximize">
-                    <materialDesign:PackIcon Kind="WindowMaximize"/>
+                    <Image Source="Images/window-maximize.png"/>
                 </Button>
                 <Button ToolTip="Power">
-                    <materialDesign:PackIcon Kind="Power"/>
+                    <Image Source="Images/power.png"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -42,35 +42,35 @@
                         Style="{StaticResource StackPanelBar}">
                 <Separator Height="2"/>
                 <Button ToolTip="Save">
-                    <materialDesign:PackIcon Kind="ContentSave"/>
+                    <Image Source="Images/content-save.png"/>
                 </Button>
                 <Button ToolTip="Open">
-                    <materialDesign:PackIcon Kind="FolderOpen"/>
+                    <Image Source="Images/folder-open.png"/>
                 </Button>
                 <Separator Height="2"/>
                 <Button ToolTip="Pencil">
-                    <materialDesign:PackIcon Kind="Pencil"/>
+                    <Image Source="Images/pencil.png"/>
                 </Button>
                 <Button ToolTip="Pipette">
-                    <materialDesign:PackIcon Kind="Pipette"/>
+                    <Image Source="Images/eyedropper.png"/>
                 </Button>
                 <Button ToolTip="Eraser">
-                    <materialDesign:PackIcon Kind="Eraser"/>
+                    <Image Source="Images/eraser.png"/>
                 </Button>
                 <Separator Height="2"/>
                 <Button ToolTip="Text">
-                    <materialDesign:PackIcon Kind="TextRecognition"/>
+                    <Image Source="Images/text-recognition.png"/>
                 </Button>
                 <ComboBox ToolTip="Font Size"/>
                 <Separator Height="2"/>
                 <Button ToolTip="Rectangle">
-                    <materialDesign:PackIcon Kind="Rectangle"/>
+                    <Image Source="Images/rectangle.png"/>
                 </Button>
                 <Button ToolTip="Ellipse">
-                    <materialDesign:PackIcon Kind="Ellipse"/>
+                    <Image Source="Images/ellipse.png"/>
                 </Button>
                 <Button ToolTip="Line">
-                    <materialDesign:PackIcon Kind="SawtoothWave"/>
+                    <Image Source="Images/sawtooth-wave.png"/>
                 </Button>
             </StackPanel>
         </Grid>

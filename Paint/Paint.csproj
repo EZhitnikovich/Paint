@@ -7,11 +7,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\content-save.png" />
+    <None Remove="Images\ellipse.png" />
+    <None Remove="Images\eraser.png" />
+    <None Remove="Images\eyedropper.png" />
+    <None Remove="Images\folder-open.png" />
+    <None Remove="Images\pencil.png" />
+    <None Remove="Images\power.png" />
+    <None Remove="Images\rectangle.png" />
+    <None Remove="Images\sawtooth-wave.png" />
+    <None Remove="Images\text-recognition.png" />
+    <None Remove="Images\window-maximize.png" />
+    <None Remove="Images\window-minimize.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    <Resource Include="Images\content-save.png" />
+    <Resource Include="Images\ellipse.png" />
+    <Resource Include="Images\eraser.png" />
+    <Resource Include="Images\eyedropper.png" />
+    <Resource Include="Images\folder-open.png" />
+    <Resource Include="Images\pencil.png" />
+    <Resource Include="Images\power.png" />
+    <Resource Include="Images\rectangle.png" />
+    <Resource Include="Images\sawtooth-wave.png" />
+    <Resource Include="Images\text-recognition.png" />
+    <Resource Include="Images\window-maximize.png" />
+    <Resource Include="Images\window-minimize.png" />
   </ItemGroup>
 
 </Project>
