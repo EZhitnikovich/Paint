@@ -26,7 +26,7 @@ namespace Paint
         public MainWindow()
         {
             InitializeComponent();
-            mainView = new MainViewModel();
+            mainView = new MainViewModel(this);
             DataContext = mainView;
         }
 

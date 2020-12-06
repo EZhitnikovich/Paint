@@ -42,10 +42,10 @@
                         VerticalAlignment="Top"
                         Style="{StaticResource StackPanelBar}">
                 <Separator Height="2"/>
-                <Button ToolTip="Save">
+                <Button ToolTip="Save" Command="{Binding SaveFileDialog}">
                     <Image Source="Images/content-save.png"/>
                 </Button>
-                <Button ToolTip="Open">
+                <Button ToolTip="Open" Command="{Binding OpenFileCommand}">
                     <Image Source="Images/folder-open.png"/>
                 </Button>
                 <Separator Height="2"/>
@@ -96,15 +96,18 @@
                     <Label Grid.Row="1" Grid.Column="0" Content="Green:" Foreground="Green"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Blue:" Foreground="Blue"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Example:" FontWeight="Bold"/>
-                    <ScrollBar Grid.Row="0" Grid.Column="1"
+                    <Slider Grid.Row="0" Grid.Column="1"
+                               VerticalAlignment="Center"
                                Minimum="0"
                                Maximum="255"
                                Value="{Binding RedValue}"/>
-                    <ScrollBar Grid.Row="1" Grid.Column="1"
+                    <Slider Grid.Row="1" Grid.Column="1"
+                               VerticalAlignment="Center"
                                Minimum="0"
                                Maximum="255"
                                Value="{Binding GreenValue}"/>
-                    <ScrollBar Grid.Row="2" Grid.Column="1"
+                    <Slider Grid.Row="2" Grid.Column="1"
+                               VerticalAlignment="Center"
                                Minimum="0"
                                Maximum="255"
                                Value="{Binding BlueValue}"/>
@@ -121,6 +124,13 @@
                     <!-- layouts -->
                 </Grid>
             </Border>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Canvas Width="600" Height="600" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <InkCanvas x:Name="inkCanvas" Width="600" Height="600">
+                    <Image Source="{Binding WorkImage}"/>
+                </InkCanvas>
+            </Canvas>
         </Grid>
     </Grid>
 </Window>
