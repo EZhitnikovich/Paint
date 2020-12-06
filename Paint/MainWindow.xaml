@@ -98,15 +98,22 @@
                     <Label Grid.Row="3" Grid.Column="0" Content="Example:" FontWeight="Bold"/>
                     <ScrollBar Grid.Row="0" Grid.Column="1"
                                Minimum="0"
-                               Maximum="255"/>
+                               Maximum="255"
+                               Value="{Binding RedValue}"/>
                     <ScrollBar Grid.Row="1" Grid.Column="1"
                                Minimum="0"
-                               Maximum="255"/>
+                               Maximum="255"
+                               Value="{Binding GreenValue}"/>
                     <ScrollBar Grid.Row="2" Grid.Column="1"
                                Minimum="0"
-                               Maximum="255"/>
-                    <Canvas Grid.Row="3" Grid.Column="1" Background="White"
-                            Margin="2"/>
+                               Maximum="255"
+                               Value="{Binding BlueValue}"/>
+                    <Canvas Grid.Row="3" Grid.Column="1"
+                            Margin="2">
+                        <Canvas.Background>
+                            <SolidColorBrush Color="{Binding ResultColor}"/>
+                        </Canvas.Background>
+                    </Canvas>
                 </Grid>
             </Border>
             <Border BorderThickness="2" BorderBrush="{StaticResource MainThemeBrush}">
