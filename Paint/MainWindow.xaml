@@ -119,18 +119,52 @@
                     </Canvas>
                 </Grid>
             </Border>
-            <Border BorderThickness="2" BorderBrush="{StaticResource MainThemeBrush}">
+            <Border BorderThickness="2" BorderBrush="{StaticResource MainThemeBrush}" Grid.Row="1">
                 <Grid Grid.Row="1">
-                    <!-- layouts -->
+                    <TabControl Background="{StaticResource WorkSpaceBrush}" FontSize="14">
+                        <TabItem Header="Brush settings">
+
+                        </TabItem>
+                        <TabItem Header="Canvas settings">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.7*"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Canvas width:" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"/>
+                                <Label Grid.Row="1"
+                                       Content="Canvas height:" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" VerticalContentAlignment="Center"
+                                         Margin="4" Text="{Binding NewCanvasWidthStr}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center"
+                                         Margin="4" Text="{Binding NewCanvasHeightStr}"/>
+                                <Border Grid.ColumnSpan="2" Grid.Row="2" Margin="4" BorderBrush="{StaticResource MainThemeBrush}"
+                                        BorderThickness="1">
+                                    <Button Content="Change canvas size" Command="{Binding ChangeCanvasSize}"/>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
                 </Grid>
             </Border>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
-            <Canvas Width="600" Height="600" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <InkCanvas x:Name="inkCanvas" Width="600" Height="600">
-                    <Image Source="{Binding WorkImage}"/>
-                </InkCanvas>
-            </Canvas>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
+                    <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
+                        <Image Source="{Binding WorkImage}" Stretch="Uniform" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"/>
+                    </InkCanvas>
+                </Canvas>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>

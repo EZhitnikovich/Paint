@@ -24,7 +24,14 @@ namespace Paint.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
         
-        BitmapImage workImage;
+        private BitmapImage workImage;
+        private double canvasWidth = 600;
+        private double canvasHeight = 600;
+        private int penWidth = 1;
+        private int penHeight = 1;
+
+        private string newCanvasWidthStr;
+        private string newCanvasHeightStr;
 
         private MainWindow window;
 
@@ -49,6 +56,7 @@ namespace Paint.ViewModel
         private RelayCommand maximizeCommand;
         private RelayCommand openFileCommand;
         private RelayCommand saveFileCommand;
+        private RelayCommand changeCanvasSize;
 
         #endregion
         
@@ -97,10 +105,12 @@ namespace Paint.ViewModel
                 return openFileCommand ??= new RelayCommand(obj =>
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "PNG (*.png)|*.png|JPEG (*.jpeg)|*.jpeg";
+                    openFileDialog.Filter = "PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
                     if (openFileDialog.ShowDialog() == true)
                     {
                         WorkImage = new BitmapImage(new Uri(openFileDialog.FileName));
+                        CanvasHeight = WorkImage.Height;
+                        CanvasWidth = WorkImage.Width;
                     }
                 });
             }
@@ -113,7 +123,7 @@ namespace Paint.ViewModel
                 return saveFileCommand ??= new RelayCommand(obj =>
                 {
                     SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "PNG (*.png)|*.png|JPEG (*.jpeg)|*.jpeg";
+                    saveFileDialog.Filter = "PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
                     if (saveFileDialog.ShowDialog() == true)
                     {
                         var size = new System.Windows.Size(window.inkCanvas.ActualWidth, window.inkCanvas.ActualHeight);
@@ -132,6 +142,56 @@ namespace Paint.ViewModel
             }
         }
 
+        public RelayCommand ChangeCanvasSize
+        {
+            get
+            {
+                return changeCanvasSize ??= new RelayCommand(obj =>
+                {
+                    bool heightBool = double.TryParse(NewCanvasHeightStr, out double newCanvasHeight);
+                    bool widthBool = double.TryParse(NewCanvasWidthStr, out double newCanvasWidth);
+
+                    if ((heightBool && newCanvasHeight > 0) &&
+                        (widthBool && newCanvasWidth > 0))
+                    {
+                        CanvasHeight = newCanvasHeight;
+                        CanvasWidth = newCanvasWidth;
+
+                        window.inkCanvas.Strokes.Clear();
+                        WorkImage = new BitmapImage();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Entered invalid valuest");
+                    }
+                });
+            }
+        }
+
+        #endregion
+
+        #region textProperty
+
+        public string NewCanvasWidthStr
+        {
+            get { return newCanvasWidthStr; }
+            set
+            {
+                newCanvasWidthStr = value;
+                OnPropertyChanged("NewCanvasWidthStr");
+            }
+        }
+
+        public string NewCanvasHeightStr
+        {
+            get { return newCanvasHeightStr; }
+            set
+            {
+                newCanvasHeightStr = value;
+                OnPropertyChanged("NewCanvasHeightStr");
+            }
+        }
+
         #endregion
 
         #region imageProperty
@@ -143,6 +203,46 @@ namespace Paint.ViewModel
             {
                 workImage = value;
                 OnPropertyChanged("WorkImage");
+            }
+        }
+
+        public double CanvasWidth
+        {
+            get { return canvasWidth; }
+            set
+            {
+                canvasWidth = value;
+                OnPropertyChanged("CanvasWidth");
+            }
+        }
+
+        public double CanvasHeight
+        {
+            get { return canvasHeight; }
+            set
+            {
+                canvasHeight = value;
+                OnPropertyChanged("CanvasHeight");
+            }
+        }
+
+        public int PenWidth
+        {
+            get { return penWidth; }
+            set
+            {
+                penWidth = value;
+                OnPropertyChanged("PenWidth");
+            }
+        }
+
+        public int PenHeight
+        {
+            get { return penHeight; }
+            set
+            {
+                penHeight = value;
+                OnPropertyChanged("PenHeight");
             }
         }
 
