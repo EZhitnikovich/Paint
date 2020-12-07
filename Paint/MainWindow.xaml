@@ -123,7 +123,31 @@
                 <Grid Grid.Row="1">
                     <TabControl Background="{StaticResource WorkSpaceBrush}" FontSize="14">
                         <TabItem Header="Brush settings">
-
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition Height="0.7*"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Brush width:" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"/>
+                                <Label Grid.Row="1"
+                                       Content="Brush height:" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" VerticalContentAlignment="Center"
+                                         Margin="4" Text="{Binding NewBrushWidthStr}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center"
+                                         Margin="4" Text="{Binding NewBrushHeightStr}"/>
+                                <Border Grid.ColumnSpan="2" Grid.Row="2" Margin="4" BorderBrush="{StaticResource MainThemeBrush}"
+                                        BorderThickness="1">
+                                    <Button Content="Change brush size" Command="{Binding ChangeBrushSize}"/>
+                                </Border>
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Canvas settings">
                             <Grid>

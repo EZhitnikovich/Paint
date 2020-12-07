@@ -30,26 +30,10 @@ namespace Paint.ViewModel
         private int penWidth = 1;
         private int penHeight = 1;
 
-        private string newCanvasWidthStr;
-        private string newCanvasHeightStr;
-
-        private MainWindow window;
-
-        public MainViewModel(MainWindow window)
-        {
-            this.window = window;
-        }
-
-        #region colors
-
-        private static byte redValue = 0;
-        private static byte greenValue = 0;
-        private static byte blueValue = 0;
-        private Color resultColor = Color.FromArgb(255, redValue, greenValue, blueValue);
-
-        #endregion
-
-        #region commands
+        private string newCanvasWidthStr = "600";
+        private string newCanvasHeightStr = "600";
+        private string newBrushWidthStr = "2";
+        private string newBrushHeightStr = "2";
 
         private RelayCommand closeCommand;
         private RelayCommand minimizeCommand;
@@ -57,8 +41,19 @@ namespace Paint.ViewModel
         private RelayCommand openFileCommand;
         private RelayCommand saveFileCommand;
         private RelayCommand changeCanvasSize;
+        private RelayCommand changeBrushSize;
 
-        #endregion
+        private static byte redValue = 0;
+        private static byte greenValue = 0;
+        private static byte blueValue = 0;
+        private Color resultColor = Color.FromArgb(255, redValue, greenValue, blueValue);
+
+        private MainWindow window;
+
+        public MainViewModel(MainWindow window)
+        {
+            this.window = window;
+        }
         
         #region commandsProperty
 
@@ -162,7 +157,30 @@ namespace Paint.ViewModel
                     }
                     else
                     {
-                        MessageBox.Show("Entered invalid valuest");
+                        MessageBox.Show("Entered invalid values");
+                    }
+                });
+            }
+        }
+
+        public RelayCommand ChangeBrushSize
+        {
+            get
+            {
+                return changeBrushSize ??= new RelayCommand(obj =>
+                {
+                    bool heightBool = double.TryParse(NewBrushHeightStr, out double newBrushHeight);
+                    bool widthBool = double.TryParse(NewBrushWidthStr, out double newBrushWidth);
+
+                    if ((heightBool && newBrushHeight > 0) &&
+                        (widthBool && newBrushWidth > 0))
+                    {
+                        window.inkCanvas.DefaultDrawingAttributes.Width = newBrushWidth;
+                        window.inkCanvas.DefaultDrawingAttributes.Height = newBrushHeight;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Entered invalid values");
                     }
                 });
             }
@@ -189,6 +207,26 @@ namespace Paint.ViewModel
             {
                 newCanvasHeightStr = value;
                 OnPropertyChanged("NewCanvasHeightStr");
+            }
+        }
+
+        public string NewBrushHeightStr
+        {
+            get { return newBrushHeightStr; }
+            set
+            {
+                newBrushHeightStr = value;
+                OnPropertyChanged("NewBrushHeightStr");
+            }
+        }
+
+        public string NewBrushWidthStr
+        {
+            get { return newBrushWidthStr; }
+            set
+            {
+                newBrushWidthStr = value;
+                OnPropertyChanged("NewBrushWidthStr");
             }
         }
 
