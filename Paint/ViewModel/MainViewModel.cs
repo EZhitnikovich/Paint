@@ -110,6 +110,7 @@ namespace Paint.ViewModel
                         WorkImage = new BitmapImage(new Uri(openFileDialog.FileName));
                         CanvasHeight = WorkImage.Height;
                         CanvasWidth = WorkImage.Width;
+                        window.inkCanvas.Strokes.Clear();
                     }
                 });
             }
@@ -150,8 +151,8 @@ namespace Paint.ViewModel
                     bool heightBool = double.TryParse(NewCanvasHeightStr, out double newCanvasHeight);
                     bool widthBool = double.TryParse(NewCanvasWidthStr, out double newCanvasWidth);
 
-                    if ((heightBool && newCanvasHeight > 0) &&
-                        (widthBool && newCanvasWidth > 0))
+                    if ((heightBool && newCanvasHeight > 0 && newCanvasHeight < 10000) &&
+                        (widthBool && newCanvasWidth > 0 && newCanvasWidth < 10000))
                     {
                         CanvasHeight = newCanvasHeight;
                         CanvasWidth = newCanvasWidth;
@@ -176,8 +177,8 @@ namespace Paint.ViewModel
                     bool heightBool = double.TryParse(NewBrushHeightStr, out double newBrushHeight);
                     bool widthBool = double.TryParse(NewBrushWidthStr, out double newBrushWidth);
 
-                    if ((heightBool && newBrushHeight > 0) &&
-                        (widthBool && newBrushWidth > 0))
+                    if ((heightBool && newBrushHeight > 0 && newBrushHeight < 1000) &&
+                        (widthBool && newBrushWidth > 0 && newBrushWidth < 1000))
                     {
                         DAttributes.Width = newBrushWidth;
                         DAttributes.Height = newBrushHeight;
