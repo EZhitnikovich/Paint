@@ -11,6 +11,7 @@ using System.Drawing;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Ink;
 using Color = System.Windows.Media.Color;
 
 namespace Paint.ViewModel
@@ -48,13 +49,16 @@ namespace Paint.ViewModel
         private static byte blueValue = 0;
         private Color resultColor = Color.FromArgb(255, redValue, greenValue, blueValue);
 
+        private DrawingAttributes drawingAttributes;
+
         private MainWindow window;
 
         public MainViewModel(MainWindow window)
         {
             this.window = window;
+            drawingAttributes = new DrawingAttributes();
         }
-        
+
         #region commandsProperty
 
         public RelayCommand CloseCommand
@@ -121,7 +125,7 @@ namespace Paint.ViewModel
                     saveFileDialog.Filter = "PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
                     if (saveFileDialog.ShowDialog() == true)
                     {
-                        var size = new System.Windows.Size(window.inkCanvas.ActualWidth, window.inkCanvas.ActualHeight);
+                        var size = new System.Windows.Size(CanvasWidth, CanvasHeight);
                         JpegBitmapEncoder encoder = new JpegBitmapEncoder();
                         string path = saveFileDialog.FileName;
                         var bitmapTarget = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Default);
@@ -175,8 +179,8 @@ namespace Paint.ViewModel
                     if ((heightBool && newBrushHeight > 0) &&
                         (widthBool && newBrushWidth > 0))
                     {
-                        window.inkCanvas.DefaultDrawingAttributes.Width = newBrushWidth;
-                        window.inkCanvas.DefaultDrawingAttributes.Height = newBrushHeight;
+                        DAttributes.Width = newBrushWidth;
+                        DAttributes.Height = newBrushHeight;
                     }
                     else
                     {
@@ -233,6 +237,16 @@ namespace Paint.ViewModel
         #endregion
 
         #region imageProperty
+
+        public DrawingAttributes DAttributes
+        {
+            get { return drawingAttributes; }
+            set
+            {
+                drawingAttributes = value;
+                OnPropertyChanged("DAttributes");
+            }
+        }
 
         public BitmapImage WorkImage
         {
@@ -294,7 +308,7 @@ namespace Paint.ViewModel
             set
             {
                 ResultColor = Color.FromArgb(255, value, greenValue, blueValue);
-                window.inkCanvas.DefaultDrawingAttributes.Color = ResultColor;
+                DAttributes.Color = ResultColor;
                 redValue = value;
                 OnPropertyChanged("RedValue");
             }
@@ -306,7 +320,7 @@ namespace Paint.ViewModel
             set
             {
                 ResultColor = Color.FromArgb(255, redValue, value, blueValue);
-                window.inkCanvas.DefaultDrawingAttributes.Color = ResultColor;
+                DAttributes.Color = ResultColor;
                 greenValue = value;
                 OnPropertyChanged("GreenValue");
             }
@@ -318,7 +332,7 @@ namespace Paint.ViewModel
             set
             {
                 ResultColor = Color.FromArgb(255, redValue, greenValue, value);
-                window.inkCanvas.DefaultDrawingAttributes.Color = ResultColor;
+                DAttributes.Color = ResultColor;
                 blueValue = value;
                 OnPropertyChanged("BlueValue");
             }

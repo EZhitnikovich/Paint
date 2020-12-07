@@ -62,7 +62,7 @@
                 <Button ToolTip="Text">
                     <Image Source="Images/text-recognition.png"/>
                 </Button>
-                <ComboBox ToolTip="Font Size"/>
+                <ComboBox ToolTip="Font Size(px)"/>
                 <Separator Height="2"/>
                 <Button ToolTip="Rectangle">
                     <Image Source="Images/rectangle.png"/>
@@ -184,7 +184,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Auto">
                 <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
-                    <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
+                    <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" DefaultDrawingAttributes="{Binding DAttributes}">
                         <Image Source="{Binding WorkImage}" Stretch="Uniform" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"/>
                     </InkCanvas>
                 </Canvas>
