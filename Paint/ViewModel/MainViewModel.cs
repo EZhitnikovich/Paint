@@ -33,8 +33,8 @@ namespace Paint.ViewModel
 
         private string newCanvasWidthStr = "600";
         private string newCanvasHeightStr = "600";
-        private string newBrushWidthStr = "2";
-        private string newBrushHeightStr = "2";
+        private int brushWidth = 2;
+        private int brushHeight = 2;
 
         private RelayCommand closeCommand;
         private RelayCommand minimizeCommand;
@@ -174,19 +174,8 @@ namespace Paint.ViewModel
             {
                 return changeBrushSize ??= new RelayCommand(obj =>
                 {
-                    bool heightBool = double.TryParse(NewBrushHeightStr, out double newBrushHeight);
-                    bool widthBool = double.TryParse(NewBrushWidthStr, out double newBrushWidth);
-
-                    if ((heightBool && newBrushHeight > 0 && newBrushHeight < 1000) &&
-                        (widthBool && newBrushWidth > 0 && newBrushWidth < 1000))
-                    {
-                        DAttributes.Width = newBrushWidth;
-                        DAttributes.Height = newBrushHeight;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Entered invalid values");
-                    }
+                    DAttributes.Width = BrushWidth;
+                    DAttributes.Height = BrushHeight;
                 });
             }
         }
@@ -212,26 +201,6 @@ namespace Paint.ViewModel
             {
                 newCanvasHeightStr = value;
                 OnPropertyChanged("NewCanvasHeightStr");
-            }
-        }
-
-        public string NewBrushHeightStr
-        {
-            get { return newBrushHeightStr; }
-            set
-            {
-                newBrushHeightStr = value;
-                OnPropertyChanged("NewBrushHeightStr");
-            }
-        }
-
-        public string NewBrushWidthStr
-        {
-            get { return newBrushWidthStr; }
-            set
-            {
-                newBrushWidthStr = value;
-                OnPropertyChanged("NewBrushWidthStr");
             }
         }
 
@@ -279,23 +248,23 @@ namespace Paint.ViewModel
             }
         }
 
-        public int PenWidth
+        public int BrushWidth
         {
-            get { return penWidth; }
+            get { return brushWidth; }
             set
             {
-                penWidth = value;
-                OnPropertyChanged("PenWidth");
+                brushWidth = value;
+                OnPropertyChanged("BrushWidth");
             }
         }
 
-        public int PenHeight
+        public int BrushHeight
         {
-            get { return penHeight; }
+            get { return brushHeight; }
             set
             {
-                penHeight = value;
-                OnPropertyChanged("PenHeight");
+                brushHeight = value;
+                OnPropertyChanged("BrushHeight");
             }
         }
 
