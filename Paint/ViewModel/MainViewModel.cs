@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Ink;
 using Color = System.Windows.Media.Color;
+using System.Windows.Controls;
 
 namespace Paint.ViewModel
 {
@@ -28,13 +29,15 @@ namespace Paint.ViewModel
         private BitmapImage workImage;
         private double canvasWidth = 600;
         private double canvasHeight = 600;
-        private int penWidth = 1;
-        private int penHeight = 1;
 
         private string newCanvasWidthStr = "600";
         private string newCanvasHeightStr = "600";
         private int brushWidth = 2;
         private int brushHeight = 2;
+
+        private bool isFill = false;
+
+        private Cursor cursorEraser;
 
         private RelayCommand closeCommand;
         private RelayCommand minimizeCommand;
@@ -43,6 +46,10 @@ namespace Paint.ViewModel
         private RelayCommand saveFileCommand;
         private RelayCommand changeCanvasSize;
         private RelayCommand changeBrushSize;
+        private RelayCommand brushCommand;
+        private RelayCommand eraserCommand;
+
+        private Color eraserColor = Color.FromArgb(255, 255, 255, 255);
 
         private static byte redValue = 0;
         private static byte greenValue = 0;
@@ -55,9 +62,26 @@ namespace Paint.ViewModel
 
         public MainViewModel(MainWindow window)
         {
+            cursorEraser = new Cursor(Application.GetResourceStream(new Uri("Cursors/eraser.cur", UriKind.Relative)).Stream);
             this.window = window;
             drawingAttributes = new DrawingAttributes();
+            //window.inkCanvas.UseCustomCursor = true;
+            //window.inkCanvas.Cursor = cursorEyedropper;
         }
+
+        #region figureProp
+
+        public bool IsFill
+        {
+            get { return isFill; }
+            set
+            {
+                isFill = value;
+                OnPropertyChanged("IsFill");
+            }
+        }
+
+        #endregion
 
         #region commandsProperty
 
@@ -176,6 +200,33 @@ namespace Paint.ViewModel
                 {
                     DAttributes.Width = BrushWidth;
                     DAttributes.Height = BrushHeight;
+                });
+            }
+        }
+
+        public RelayCommand BrushCommand
+        {
+            get
+            {
+                return brushCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.UseCustomCursor = false;
+                    DAttributes.Color = ResultColor;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
+                });
+            }
+        }
+
+        public RelayCommand EraserCommand
+        {
+            get
+            {
+                return eraserCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.UseCustomCursor = true;
+                    window.inkCanvas.Cursor = cursorEraser;
+                    DAttributes.Color = eraserColor;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
                 });
             }
         }

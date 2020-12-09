@@ -49,13 +49,10 @@
                     <Image Source="Images/folder-open.png"/>
                 </Button>
                 <Separator Height="2"/>
-                <Button ToolTip="Pencil">
+                <Button ToolTip="Pencil" Command="{Binding BrushCommand}">
                     <Image Source="Images/pencil.png"/>
                 </Button>
-                <Button ToolTip="Pipette">
-                    <Image Source="Images/eyedropper.png"/>
-                </Button>
-                <Button ToolTip="Eraser">
+                <Button ToolTip="Eraser" Command="{Binding EraserCommand}">
                     <Image Source="Images/eraser.png"/>
                 </Button>
                 <Separator Height="2"/>
@@ -73,6 +70,10 @@
                 <Button ToolTip="Line">
                     <Image Source="Images/sawtooth-wave.png"/>
                 </Button>
+                <ToggleButton ToolTip="Fill" Style="{StaticResource MinimizedButtonToggle}"
+                              IsChecked="{Binding IsFill}">
+                    <Image Source="Images/format-color-fill.png"/>
+                </ToggleButton>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2">
@@ -191,7 +192,8 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Auto">
                 <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
-                    <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" DefaultDrawingAttributes="{Binding DAttributes}">
+                    <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+                               DefaultDrawingAttributes="{Binding DAttributes}">
                         <Image Source="{Binding WorkImage}" Stretch="Uniform" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"/>
                     </InkCanvas>
                 </Canvas>

@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Cursors\eraser.cur" />
+    <None Remove="Cursors\eyedropper.cur" />
     <None Remove="Images\content-save.png" />
     <None Remove="Images\ellipse.png" />
     <None Remove="Images\eraser.png" />
     <None Remove="Images\eyedropper.png" />
     <None Remove="Images\folder-open.png" />
+    <None Remove="Images\format-color-fill.png" />
     <None Remove="Images\pencil.png" />
     <None Remove="Images\power.png" />
     <None Remove="Images\rectangle.png" />
@@ -22,11 +25,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Cursors\eraser.cur">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Cursors\eyedropper.cur">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\content-save.png" />
     <Resource Include="Images\ellipse.png" />
     <Resource Include="Images\eraser.png" />
     <Resource Include="Images\eyedropper.png" />
     <Resource Include="Images\folder-open.png" />
+    <Resource Include="Images\format-color-fill.png" />
     <Resource Include="Images\pencil.png" />
     <Resource Include="Images\power.png" />
     <Resource Include="Images\rectangle.png" />
