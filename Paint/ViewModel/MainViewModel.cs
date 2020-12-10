@@ -25,8 +25,8 @@ namespace Paint.ViewModel
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
-        
-        private BitmapImage workImage;
+
+        private Bitmap workImage;
         private double canvasWidth = 600;
         private double canvasHeight = 600;
 
@@ -62,11 +62,13 @@ namespace Paint.ViewModel
 
         public MainViewModel(MainWindow window)
         {
+            workImage = new Bitmap(Convert.ToInt32(canvasWidth), Convert.ToInt32(canvasHeight));
+            Graphics g = Graphics.FromImage(workImage);
+            g.Clear(System.Drawing.Color.White);
+
             cursorEraser = new Cursor(Application.GetResourceStream(new Uri("Cursors/eraser.cur", UriKind.Relative)).Stream);
             this.window = window;
             drawingAttributes = new DrawingAttributes();
-            //window.inkCanvas.UseCustomCursor = true;
-            //window.inkCanvas.Cursor = cursorEyedropper;
         }
 
         #region figureProp
@@ -131,7 +133,7 @@ namespace Paint.ViewModel
                     openFileDialog.Filter = "PNG (*.png)|*.png|JPG (*.jpg)|*.jpg";
                     if (openFileDialog.ShowDialog() == true)
                     {
-                        WorkImage = new BitmapImage(new Uri(openFileDialog.FileName));
+                        WorkImage = new Bitmap(openFileDialog.FileName);
                         CanvasHeight = WorkImage.Height;
                         CanvasWidth = WorkImage.Width;
                         window.inkCanvas.Strokes.Clear();
@@ -182,7 +184,8 @@ namespace Paint.ViewModel
                         CanvasWidth = newCanvasWidth;
 
                         window.inkCanvas.Strokes.Clear();
-                        WorkImage = new BitmapImage();
+                        Graphics g = Graphics.FromImage(WorkImage);
+                        g.Clear(System.Drawing.Color.White);
                     }
                     else
                     {
@@ -269,7 +272,7 @@ namespace Paint.ViewModel
             }
         }
 
-        public BitmapImage WorkImage
+        public Bitmap WorkImage
         {
             get { return workImage; }
             set
