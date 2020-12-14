@@ -52,6 +52,7 @@ namespace Paint.ViewModel
         private RelayCommand brushCommand;
         private RelayCommand eraserCommand;
         private RelayCommand eyedropperCommand;
+        private RelayCommand clearCommand;
 
         private Color eraserColor = Color.FromArgb(255, 255, 255, 255);
 
@@ -261,6 +262,20 @@ namespace Paint.ViewModel
             }
         }
 
+        public RelayCommand ClearCommand
+        {
+            get
+            {
+                return clearCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.Strokes.Clear();
+                    Graphics g = Graphics.FromImage(WorkImage);
+                    g.Clear(System.Drawing.Color.White);
+                    WorkImage = WorkImage;
+                });
+            }
+        }
+
         #endregion
 
         #region textProperty
@@ -315,6 +330,7 @@ namespace Paint.ViewModel
             set
             {
                 canvasWidth = value;
+                NewCanvasWidthStr = canvasWidth.ToString();
                 OnPropertyChanged("CanvasWidth");
             }
         }
@@ -325,6 +341,7 @@ namespace Paint.ViewModel
             set
             {
                 canvasHeight = value;
+                NewCanvasHeightStr = canvasHeight.ToString();
                 OnPropertyChanged("CanvasHeight");
             }
         }

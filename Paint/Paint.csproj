@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Cursors\eraser.cur" />
     <None Remove="Cursors\eyedropper.cur" />
+    <None Remove="Images\autorenew.png" />
     <None Remove="Images\content-save.png" />
     <None Remove="Images\ellipse.png" />
     <None Remove="Images\eraser.png" />
@@ -35,6 +36,7 @@
     <Resource Include="Cursors\eyedropper.cur">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\autorenew.png" />
     <Resource Include="Images\content-save.png" />
     <Resource Include="Images\ellipse.png" />
     <Resource Include="Images\eraser.png" />

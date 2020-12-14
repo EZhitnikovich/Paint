@@ -80,6 +80,11 @@
                               IsChecked="{Binding IsFill}">
                     <Image Source="Images/format-color-fill.png"/>
                 </ToggleButton>
+                <Separator/>
+                <Button ToolTip="Clear" Style="{StaticResource MinimizedButton}"
+                        Command="{Binding ClearCommand}">
+                    <Image Source="Images/autorenew.png"/>
+                </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2">
@@ -216,7 +221,7 @@
                             <MenuItem Header="Save" Command="{Binding SaveFileDialog}"/>
                             <MenuItem Header="Open" Command="{Binding OpenFileCommand}"/>
                             <Separator/>
-                            <MenuItem Header="Clear"/>
+                            <MenuItem Header="Clear" Command="{Binding ClearCommand}"/>
                         </ContextMenu>
                     </Canvas.ContextMenu>
                     <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
