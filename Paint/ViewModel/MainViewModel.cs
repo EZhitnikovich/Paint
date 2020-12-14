@@ -34,10 +34,17 @@ namespace Paint.ViewModel
         private string newCanvasHeightStr = "600";
         private int brushWidth = 2;
         private int brushHeight = 2;
+        private int borderWidth = 1;
+
+        public bool IsRectangle { get; protected set; } = false;
+        public bool IsEllipse { get; protected set; } = false;
+        public bool IsLine { get; protected set; } = false;
+        public bool IsPen { get; protected set; } = true;
+        public bool IsYeydropper { get; protected set; } = false;
 
         private bool isFill = false;
+        private bool isExperiment = false;
 
-        public bool IsYeydropper { get; protected set; } = false;
 
         private Cursor cursorEraser;
         private Cursor cursorEyedropper;
@@ -53,6 +60,9 @@ namespace Paint.ViewModel
         private RelayCommand eraserCommand;
         private RelayCommand eyedropperCommand;
         private RelayCommand clearCommand;
+        private RelayCommand rectagleCommand;
+        private RelayCommand ellipseCommand;
+        private RelayCommand lineCommand;
 
         private Color eraserColor = Color.FromArgb(255, 255, 255, 255);
 
@@ -86,6 +96,49 @@ namespace Paint.ViewModel
             {
                 isFill = value;
                 OnPropertyChanged("IsFill");
+            }
+        }
+
+        public bool IsExperiment
+        {
+            get { return isExperiment; }
+            set
+            {
+                isExperiment = value;
+                OnPropertyChanged("IsExperiment");
+            }
+        }
+
+        public RelayCommand RectangleCommand
+        {
+            get
+            {
+                return rectagleCommand ??= new RelayCommand(obj =>
+                {
+                    SwitchCondition("rectangle");
+                });
+            }
+        }
+
+        public RelayCommand EllipseCommand
+        {
+            get
+            {
+                return ellipseCommand ??= new RelayCommand(obj =>
+                {
+                    SwitchCondition("ellipse");
+                });
+            }
+        }
+
+        public RelayCommand LineCommand
+        {
+            get
+            {
+                return lineCommand ??= new RelayCommand(obj =>
+                {
+                    SwitchCondition("line");
+                });
             }
         }
 
@@ -190,8 +243,10 @@ namespace Paint.ViewModel
                         CanvasWidth = newCanvasWidth;
 
                         window.inkCanvas.Strokes.Clear();
+                        WorkImage = new Bitmap((int)CanvasWidth, (int)CanvasHeight);
                         Graphics g = Graphics.FromImage(WorkImage);
                         g.Clear(System.Drawing.Color.White);
+                        WorkImage = WorkImage;
                     }
                     else
                     {
@@ -222,7 +277,7 @@ namespace Paint.ViewModel
                     window.inkCanvas.UseCustomCursor = false;
                     DAttributes.Color = ResultColor;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
-                    IsYeydropper = false;
+                    SwitchCondition("pen");
                     DAttributes.Width = BrushWidth;
                     DAttributes.Height = BrushHeight;
                 });
@@ -239,7 +294,7 @@ namespace Paint.ViewModel
                     window.inkCanvas.Cursor = cursorEraser;
                     DAttributes.Color = eraserColor;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
-                    IsYeydropper = false;
+                    SwitchCondition("pen");
                     DAttributes.Width = BrushWidth;
                     DAttributes.Height = BrushHeight;
                 });
@@ -254,7 +309,7 @@ namespace Paint.ViewModel
                 {
                     window.inkCanvas.UseCustomCursor = true;
                     window.inkCanvas.Cursor = cursorEyedropper;
-                    IsYeydropper = true;
+                    SwitchCondition("eyedropper");
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.GestureOnly;
                     DAttributes.Width = 1;
                     DAttributes.Height = 1;
@@ -366,6 +421,16 @@ namespace Paint.ViewModel
             }
         }
 
+        public int BorderWidth
+        {
+            get { return borderWidth; }
+            set
+            {
+                borderWidth = value;
+                OnPropertyChanged("BorderWidth");
+            }
+        }
+
         #endregion
 
         #region colorsProperty
@@ -417,5 +482,50 @@ namespace Paint.ViewModel
         }
 
         #endregion
+
+        private void SwitchCondition(string condition)
+        {
+            switch (condition)
+            {
+                case "pen":
+                    IsRectangle = false;
+                    IsEllipse = false;
+                    IsLine = false;
+                    IsPen = true;
+                    IsYeydropper = false;
+                    break;
+                case "eyedropper":
+                    IsRectangle = false;
+                    IsEllipse = false;
+                    IsLine = false;
+                    IsPen = false;
+                    IsYeydropper = true;
+                    break;
+                case "line":
+                    IsRectangle = false;
+                    IsEllipse = false;
+                    IsLine = true;
+                    IsPen = false;
+                    IsYeydropper = false;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
+                    break;
+                case "rectangle":
+                    IsRectangle = true;
+                    IsEllipse = false;
+                    IsLine = false;
+                    IsPen = false;
+                    IsYeydropper = false;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
+                    break;
+                case "ellipse":
+                    IsRectangle = false;
+                    IsEllipse = true;
+                    IsLine = false;
+                    IsPen = false;
+                    IsYeydropper = false;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
+                    break;
+            }
+        }
     }
 }

@@ -67,13 +67,13 @@
                 </Button>
                 <ComboBox ToolTip="Font Size(px)"/>
                 <Separator Height="2"/>
-                <Button ToolTip="Rectangle">
+                <Button ToolTip="Rectangle" Command="{Binding RectangleCommand}">
                     <Image Source="Images/rectangle.png"/>
                 </Button>
-                <Button ToolTip="Ellipse">
+                <Button ToolTip="Ellipse" Command="{Binding EllipseCommand}">
                     <Image Source="Images/ellipse.png"/>
                 </Button>
-                <Button ToolTip="Line">
+                <Button ToolTip="Line" Command="{Binding LineCommand}">
                     <Image Source="Images/sawtooth-wave.png"/>
                 </Button>
                 <ToggleButton ToolTip="Fill" Style="{StaticResource MinimizedButtonToggle}"
@@ -166,6 +166,14 @@
                                         BorderThickness="1">
                                     <Button Content="Change brush size" Command="{Binding ChangeBrushSize}"/>
                                 </Border>
+                                <Label Content="Border width" Grid.Row="3" HorizontalAlignment="Right"/>
+                                <Label Grid.Row="3" Grid.Column="1" Content="{Binding BorderWidth}"
+                                       HorizontalAlignment="Center"/>
+                                <Slider Grid.Column="2" Grid.Row="3"
+                                        Minimum="1"
+                                        Maximum="36"
+                                        Margin="4"
+                                        Value="{Binding BorderWidth}"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Canvas settings">
@@ -211,6 +219,9 @@
                     <Separator/>
                     <MenuItem Header="Exit" Command="{Binding CloseCommand}"/>
                 </MenuItem>
+                <ToggleButton Content="experimental" VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"
+                              IsChecked="{Binding IsExperiment}"/>
             </Menu>
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Auto"
@@ -226,7 +237,9 @@
                     </Canvas.ContextMenu>
                     <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
                                DefaultDrawingAttributes="{Binding DAttributes}"
-                               MouseUp="inkCanvas_MouseUp">
+                               MouseUp="inkCanvas_MouseUp"
+                               MouseMove="inkCanvas_MouseMove"
+                               MouseDown="inkCanvas_MouseDown">
                         <Image Source="{Binding WorkImage, Converter={StaticResource ImageConverter}}" Stretch="Uniform" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"/>
                     </InkCanvas>
                 </Canvas>
