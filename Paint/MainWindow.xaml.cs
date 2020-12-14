@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using Paint.ViewModel;
 using Point = System.Windows.Point;
 using Pen = System.Drawing.Pen;
+using System.IO;
+using System.Windows.Controls;
+using Image = System.Drawing.Image;
 
 namespace Paint
 {
@@ -42,6 +45,19 @@ namespace Paint
 
         private void inkCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (mainView.IsPen)
+            {
+                try
+                {
+                    ExportToJpeg(@"temp.png", inkCanvas);
+                    inkCanvas.Strokes.Clear();
+                    Graphics g = Graphics.FromImage(mainView.WorkImage);
+                    g.DrawImage(Image.FromFile("temp.png"), 0, 0);
+                }
+                catch {; };
+            }
+            
+
             if (mainView.IsYeydropper)
             {
                 var p = e.GetPosition(this.inkCanvas);
@@ -131,6 +147,40 @@ namespace Paint
             Image img = Image.FromHbitmap(mainView.WorkImage.GetHbitmap());
             tempBitmap = new Bitmap(img);
             startPoint = e.GetPosition(inkCanvas);
+        }
+
+        public void ExportToJpeg(String path, InkCanvas surface)
+        {
+            double
+                    x1 = surface.Margin.Left,
+                    x2 = surface.Margin.Top,
+                    x3 = surface.Margin.Right,
+                    x4 = surface.Margin.Bottom;
+
+            if (path == null) return;
+
+            surface.Margin = new Thickness(0, 0, 0, 0);
+
+            System.Windows.Size size = new System.Windows.Size(surface.Width, surface.Height);
+            surface.Measure(size);
+            surface.Arrange(new Rect(size));
+            
+            RenderTargetBitmap renderBitmap =
+             new RenderTargetBitmap(
+               (int)size.Width,
+               (int)size.Height,
+               96,
+               96,
+               PixelFormats.Default);
+            renderBitmap.Render(surface);
+
+            using (FileStream fs = File.Open(path, FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+                encoder.Save(fs);
+            }
+            surface.Margin = new Thickness(x1, x2, x3, x4);
         }
     }
 }

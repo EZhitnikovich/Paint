@@ -115,6 +115,7 @@ namespace Paint.ViewModel
             {
                 return rectagleCommand ??= new RelayCommand(obj =>
                 {
+                    window.inkCanvas.UseCustomCursor = false;
                     SwitchCondition("rectangle");
                 });
             }
@@ -126,6 +127,7 @@ namespace Paint.ViewModel
             {
                 return ellipseCommand ??= new RelayCommand(obj =>
                 {
+                    window.inkCanvas.UseCustomCursor = false;
                     SwitchCondition("ellipse");
                 });
             }
@@ -137,6 +139,7 @@ namespace Paint.ViewModel
             {
                 return lineCommand ??= new RelayCommand(obj =>
                 {
+                    window.inkCanvas.UseCustomCursor = false;
                     SwitchCondition("line");
                 });
             }
