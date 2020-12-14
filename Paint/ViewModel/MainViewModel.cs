@@ -37,7 +37,10 @@ namespace Paint.ViewModel
 
         private bool isFill = false;
 
+        public bool IsYeydropper { get; protected set; } = false;
+
         private Cursor cursorEraser;
+        private Cursor cursorEyedropper;
 
         private RelayCommand closeCommand;
         private RelayCommand minimizeCommand;
@@ -48,6 +51,7 @@ namespace Paint.ViewModel
         private RelayCommand changeBrushSize;
         private RelayCommand brushCommand;
         private RelayCommand eraserCommand;
+        private RelayCommand eyedropperCommand;
 
         private Color eraserColor = Color.FromArgb(255, 255, 255, 255);
 
@@ -67,6 +71,7 @@ namespace Paint.ViewModel
             g.Clear(System.Drawing.Color.White);
 
             cursorEraser = new Cursor(Application.GetResourceStream(new Uri("Cursors/eraser.cur", UriKind.Relative)).Stream);
+            cursorEyedropper = new Cursor(Application.GetResourceStream(new Uri("Cursors/eyedropper.cur", UriKind.Relative)).Stream);
             this.window = window;
             drawingAttributes = new DrawingAttributes();
         }
@@ -216,6 +221,9 @@ namespace Paint.ViewModel
                     window.inkCanvas.UseCustomCursor = false;
                     DAttributes.Color = ResultColor;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
+                    IsYeydropper = false;
+                    DAttributes.Width = BrushWidth;
+                    DAttributes.Height = BrushHeight;
                 });
             }
         }
@@ -230,6 +238,25 @@ namespace Paint.ViewModel
                     window.inkCanvas.Cursor = cursorEraser;
                     DAttributes.Color = eraserColor;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
+                    IsYeydropper = false;
+                    DAttributes.Width = BrushWidth;
+                    DAttributes.Height = BrushHeight;
+                });
+            }
+        }
+
+        public RelayCommand EyedropperCommand
+        {
+            get
+            {
+                return eyedropperCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.UseCustomCursor = true;
+                    window.inkCanvas.Cursor = cursorEyedropper;
+                    IsYeydropper = true;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.GestureOnly;
+                    DAttributes.Width = 1;
+                    DAttributes.Height = 1;
                 });
             }
         }

@@ -55,6 +55,9 @@
                 <Button ToolTip="Pencil" Command="{Binding BrushCommand}">
                     <Image Source="Images/pencil.png"/>
                 </Button>
+                <Button ToolTip="Eyedropper" Command="{Binding EyedropperCommand}">
+                    <Image Source="Images/eyedropper.png"/>
+                </Button>
                 <Button ToolTip="Eraser" Command="{Binding EraserCommand}">
                     <Image Source="Images/eraser.png"/>
                 </Button>
@@ -192,11 +195,33 @@
             </Border>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Menu Height="20" VerticalAlignment="Top" Grid.Row="0" Background="{StaticResource WorkSpaceBrush}">
+                <MenuItem Header="File">
+                    <MenuItem Header="Save" Command="{Binding SaveFileDialog}"/>
+                    <MenuItem Header="Open" Command="{Binding OpenFileCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="Exit" Command="{Binding CloseCommand}"/>
+                </MenuItem>
+            </Menu>
             <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollBarVisibility="Auto">
+                          HorizontalScrollBarVisibility="Auto"
+                          Grid.Row="1">
                 <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
+                    <Canvas.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Save" Command="{Binding SaveFileDialog}"/>
+                            <MenuItem Header="Open" Command="{Binding OpenFileCommand}"/>
+                            <Separator/>
+                            <MenuItem Header="Clear"/>
+                        </ContextMenu>
+                    </Canvas.ContextMenu>
                     <InkCanvas x:Name="inkCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
-                               DefaultDrawingAttributes="{Binding DAttributes}">
+                               DefaultDrawingAttributes="{Binding DAttributes}"
+                               MouseUp="inkCanvas_MouseUp">
                         <Image Source="{Binding WorkImage, Converter={StaticResource ImageConverter}}" Stretch="Uniform" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"/>
                     </InkCanvas>
                 </Canvas>
