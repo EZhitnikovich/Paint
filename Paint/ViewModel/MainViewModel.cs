@@ -37,6 +37,8 @@ namespace Paint.ViewModel
         private int borderWidth = 1;
 
         public Font ResultFont { get; protected set; }
+        public float StartAngle { get; protected set; }
+        public float SweepAngle { get; protected set; }
 
         public bool IsRectangle { get; protected set; } = false;
         public bool IsEllipse { get; protected set; } = false;
@@ -45,6 +47,8 @@ namespace Paint.ViewModel
         public bool IsYeydropper { get; protected set; } = false;
         public string ResultText { get; protected set; }
         public bool IsText { get; protected set; } = false;
+        public bool IsArc { get; protected set; } = false;
+        public bool IsPie { get; protected set; } = false;
 
         private bool isFill = false;
         private bool isExperiment = false;
@@ -68,6 +72,8 @@ namespace Paint.ViewModel
         private RelayCommand ellipseCommand;
         private RelayCommand lineCommand;
         private RelayCommand textCommand;
+        private RelayCommand arcCommand;
+        private RelayCommand pieCommand;
 
         private Color eraserColor = Color.FromArgb(255, 255, 255, 255);
 
@@ -80,6 +86,7 @@ namespace Paint.ViewModel
 
         private MainWindow window;
         private TextSettingsWindow textWindow;
+        private AngleSettingsWindow angleWindow;
 
         public MainViewModel(MainWindow window)
         {
@@ -92,6 +99,7 @@ namespace Paint.ViewModel
             this.window = window;
             drawingAttributes = new DrawingAttributes();
             textWindow = new TextSettingsWindow();
+            angleWindow = new AngleSettingsWindow();
         }
 
         #region figureProp
@@ -167,6 +175,44 @@ namespace Paint.ViewModel
                         ResultText = textWindow.ResultText;
                     }
                     SwitchCondition("TextCommand");
+                });
+            }
+        }
+
+        public RelayCommand ArcCommand
+        {
+            get
+            {
+                return arcCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.UseCustomCursor = false;
+                    angleWindow.ShowDialog();
+                    if (angleWindow.IsReady)
+                    {
+                        SwitchCondition("arc");
+                        StartAngle = angleWindow.StartAngle;
+                        SweepAngle = angleWindow.SweepAngle;
+                    }
+                    SwitchCondition("ArcCommand");
+                });
+            }
+        }
+
+        public RelayCommand PieCommand
+        {
+            get
+            {
+                return pieCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.UseCustomCursor = false;
+                    angleWindow.ShowDialog();
+                    if (angleWindow.IsReady)
+                    {
+                        SwitchCondition("pie");
+                        StartAngle = angleWindow.StartAngle;
+                        SweepAngle = angleWindow.SweepAngle;
+                    }
+                    SwitchCondition("PieCommand");
                 });
             }
         }
@@ -523,6 +569,8 @@ namespace Paint.ViewModel
                     IsPen = true;
                     IsYeydropper = false;
                     IsText = false;
+                    IsArc = false;
+                    IsPie = false;
                     break;
                 case "eyedropper":
                     IsRectangle = false;
@@ -531,6 +579,8 @@ namespace Paint.ViewModel
                     IsPen = false;
                     IsYeydropper = true;
                     IsText = false;
+                    IsArc = false;
+                    IsPie = false;
                     break;
                 case "line":
                     IsRectangle = false;
@@ -539,6 +589,8 @@ namespace Paint.ViewModel
                     IsPen = false;
                     IsYeydropper = false;
                     IsText = false;
+                    IsArc = false;
+                    IsPie = false;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
                 case "rectangle":
@@ -548,6 +600,8 @@ namespace Paint.ViewModel
                     IsPen = false;
                     IsYeydropper = false;
                     IsText = false;
+                    IsArc = false;
+                    IsPie = false;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
                 case "ellipse":
@@ -557,6 +611,8 @@ namespace Paint.ViewModel
                     IsPen = false;
                     IsYeydropper = false;
                     IsText = false;
+                    IsArc = false;
+                    IsPie = false;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
                 case "text":
@@ -566,6 +622,30 @@ namespace Paint.ViewModel
                     IsPen = false;
                     IsYeydropper = false;
                     IsText = true;
+                    IsArc = false;
+                    IsPie = false;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
+                    break;
+                case "arc":
+                    IsRectangle = false;
+                    IsEllipse = false;
+                    IsLine = false;
+                    IsPen = false;
+                    IsYeydropper = false;
+                    IsText = false;
+                    IsArc = true;
+                    IsPie = false;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
+                    break;
+                case "pie":
+                    IsRectangle = false;
+                    IsEllipse = false;
+                    IsLine = false;
+                    IsPen = false;
+                    IsYeydropper = false;
+                    IsText = false;
+                    IsArc = false;
+                    IsPie = true;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
             }

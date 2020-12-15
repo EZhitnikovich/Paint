@@ -75,6 +75,12 @@
                 <Button ToolTip="Line" Command="{Binding LineCommand}">
                     <Image Source="Images/sawtooth-wave.png"/>
                 </Button>
+                <Button ToolTip="Arc" Command="{Binding ArcCommand}">
+                    <Image Source="Images/chart-arc.png"/>
+                </Button>
+                <Button ToolTip="Sector" Command="{Binding PieCommand}">
+                    <Image Source="Images/chart-pie.png"/>
+                </Button>
                 <ToggleButton ToolTip="Fill" Style="{StaticResource MinimizedButtonToggle}"
                               IsChecked="{Binding IsFill}">
                     <Image Source="Images/format-color-fill.png"/>

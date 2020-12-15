@@ -1,0 +1,36 @@
+﻿<Window x:Class="Paint.AngleSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Paint"
+        mc:Ignorable="d"
+        Title="Angle Settings"
+        Height="150" Width="200"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.6*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Start angle" HorizontalAlignment="Right"
+               VerticalAlignment="Center"/>
+        <Label Content="Sweep angle" HorizontalAlignment="Right"
+               VerticalAlignment="Center" Grid.Row="1"/>
+        <TextBox Grid.Column="1" VerticalAlignment="Center"
+                 Margin="1"
+                 x:Name="startTextBox"/>
+        <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+                 Margin="1"
+                 x:Name="sweepTextBox"/>
+        <Button x:Name="acceptButton" Content="Accept" Grid.Row="2"
+                Grid.ColumnSpan="2" VerticalAlignment="Center"
+                Margin="2"
+                Click="acceptButton_Click"/>
+    </Grid>
+</Window>

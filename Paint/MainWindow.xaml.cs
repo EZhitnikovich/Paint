@@ -70,9 +70,6 @@ namespace Paint
                 mainView.BlueValue = a.B;
             }
 
-            //if(drawing)
-            //mainView.WorkImage = tempBitmap;
-
             mainView.WorkImage = mainView.WorkImage;
             drawing = false;
         }
@@ -140,6 +137,37 @@ namespace Paint
                     g.DrawString(mainView.ResultText, mainView.ResultFont, brush, (int)point.X,
                                                                                   (int)point.Y);
                 }
+                else if (mainView.IsArc)
+                {
+                    RectangleF rect = new RectangleF(Math.Min((int)startPoint.X, (int)point.X),
+                                                 Math.Min((int)startPoint.Y, (int)point.Y),
+                                                 Math.Abs((int)point.X - (int)startPoint.X),
+                                                 Math.Abs((int)point.Y - (int)startPoint.Y));
+                    try
+                    {
+                        g.DrawArc(pen, rect, mainView.StartAngle, mainView.SweepAngle);
+                    }
+                    catch { };
+                }
+                if (mainView.IsPie)
+                {
+                    System.Drawing.Rectangle rect = new System.Drawing.Rectangle(Math.Min((int)startPoint.X, (int)point.X),
+                                                 Math.Min((int)startPoint.Y, (int)point.Y),
+                                                 Math.Abs((int)point.X - (int)startPoint.X),
+                                                 Math.Abs((int)point.Y - (int)startPoint.Y));
+                    try
+                    {
+                        if (mainView.IsFill)
+                        {
+                            g.FillPie(brush, rect, mainView.StartAngle, mainView.SweepAngle);
+                        }
+                        else
+                        {
+                            g.DrawPie(pen, rect, mainView.StartAngle, mainView.SweepAngle);
+                        }
+                    }
+                    catch { };
+                }
 
                 mainView.WorkImage = mainView.WorkImage;
             }
@@ -150,7 +178,9 @@ namespace Paint
             if(mainView.IsEllipse ||
                 mainView.IsLine ||
                 mainView.IsRectangle ||
-                mainView.IsText)
+                mainView.IsText ||
+                mainView.IsPie ||
+                mainView.IsArc)
                 drawing = true;
             Image img = Image.FromHbitmap(mainView.WorkImage.GetHbitmap());
             tempBitmap = new Bitmap(img);

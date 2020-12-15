@@ -10,6 +10,8 @@
     <None Remove="Cursors\eraser.cur" />
     <None Remove="Cursors\eyedropper.cur" />
     <None Remove="Images\autorenew.png" />
+    <None Remove="Images\chart-arc.png" />
+    <None Remove="Images\chart-pie.png" />
     <None Remove="Images\content-save.png" />
     <None Remove="Images\ellipse.png" />
     <None Remove="Images\eraser.png" />
@@ -38,6 +40,8 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\autorenew.png" />
+    <Resource Include="Images\chart-arc.png" />
+    <Resource Include="Images\chart-pie.png" />
     <Resource Include="Images\content-save.png" />
     <Resource Include="Images\ellipse.png" />
     <Resource Include="Images\eraser.png" />
