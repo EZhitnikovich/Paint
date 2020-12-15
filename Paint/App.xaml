@@ -5,7 +5,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <TextBlock x:Key="eraser" Cursor="Resources/Cursors/eraser.cur"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Colors.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>

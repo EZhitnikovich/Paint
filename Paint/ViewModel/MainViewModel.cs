@@ -36,11 +36,15 @@ namespace Paint.ViewModel
         private int brushHeight = 2;
         private int borderWidth = 1;
 
+        public Font ResultFont { get; protected set; }
+
         public bool IsRectangle { get; protected set; } = false;
         public bool IsEllipse { get; protected set; } = false;
         public bool IsLine { get; protected set; } = false;
         public bool IsPen { get; protected set; } = true;
         public bool IsYeydropper { get; protected set; } = false;
+        public string ResultText { get; protected set; }
+        public bool IsText { get; protected set; } = false;
 
         private bool isFill = false;
         private bool isExperiment = false;
@@ -63,6 +67,7 @@ namespace Paint.ViewModel
         private RelayCommand rectagleCommand;
         private RelayCommand ellipseCommand;
         private RelayCommand lineCommand;
+        private RelayCommand textCommand;
 
         private Color eraserColor = Color.FromArgb(255, 255, 255, 255);
 
@@ -74,6 +79,7 @@ namespace Paint.ViewModel
         private DrawingAttributes drawingAttributes;
 
         private MainWindow window;
+        private TextSettingsWindow textWindow;
 
         public MainViewModel(MainWindow window)
         {
@@ -85,6 +91,7 @@ namespace Paint.ViewModel
             cursorEyedropper = new Cursor(Application.GetResourceStream(new Uri("Cursors/eyedropper.cur", UriKind.Relative)).Stream);
             this.window = window;
             drawingAttributes = new DrawingAttributes();
+            textWindow = new TextSettingsWindow();
         }
 
         #region figureProp
@@ -141,6 +148,25 @@ namespace Paint.ViewModel
                 {
                     window.inkCanvas.UseCustomCursor = false;
                     SwitchCondition("line");
+                });
+            }
+        }
+
+        public RelayCommand TextCommand
+        {
+            get
+            {
+                return textCommand ??= new RelayCommand(obj =>
+                {
+                    window.inkCanvas.UseCustomCursor = false;
+                    textWindow.ShowDialog();
+                    if (textWindow.IsReady)
+                    {
+                        SwitchCondition("text");
+                        ResultFont = textWindow.ResultFont;
+                        ResultText = textWindow.ResultText;
+                    }
+                    SwitchCondition("TextCommand");
                 });
             }
         }
@@ -496,6 +522,7 @@ namespace Paint.ViewModel
                     IsLine = false;
                     IsPen = true;
                     IsYeydropper = false;
+                    IsText = false;
                     break;
                 case "eyedropper":
                     IsRectangle = false;
@@ -503,6 +530,7 @@ namespace Paint.ViewModel
                     IsLine = false;
                     IsPen = false;
                     IsYeydropper = true;
+                    IsText = false;
                     break;
                 case "line":
                     IsRectangle = false;
@@ -510,6 +538,7 @@ namespace Paint.ViewModel
                     IsLine = true;
                     IsPen = false;
                     IsYeydropper = false;
+                    IsText = false;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
                 case "rectangle":
@@ -518,6 +547,7 @@ namespace Paint.ViewModel
                     IsLine = false;
                     IsPen = false;
                     IsYeydropper = false;
+                    IsText = false;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
                 case "ellipse":
@@ -526,6 +556,16 @@ namespace Paint.ViewModel
                     IsLine = false;
                     IsPen = false;
                     IsYeydropper = false;
+                    IsText = false;
+                    window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
+                    break;
+                case "text":
+                    IsRectangle = false;
+                    IsEllipse = false;
+                    IsLine = false;
+                    IsPen = false;
+                    IsYeydropper = false;
+                    IsText = true;
                     window.inkCanvas.EditingMode = InkCanvasEditingMode.None;
                     break;
             }

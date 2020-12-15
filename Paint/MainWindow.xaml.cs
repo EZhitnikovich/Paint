@@ -53,9 +53,11 @@ namespace Paint
                     inkCanvas.Strokes.Clear();
                     Graphics g = Graphics.FromImage(mainView.WorkImage);
                     g.DrawImage(Image.FromFile("temp.png"), 0, 0);
+                    File.Delete("temp.png");
                 }
                 catch {; };
             }
+            
             
 
             if (mainView.IsYeydropper)
@@ -133,6 +135,11 @@ namespace Paint
                                     (int)point.X,
                                     (int)point.Y);
                 }
+                else if (mainView.IsText)
+                {
+                    g.DrawString(mainView.ResultText, mainView.ResultFont, brush, (int)point.X,
+                                                                                  (int)point.Y);
+                }
 
                 mainView.WorkImage = mainView.WorkImage;
             }
@@ -142,7 +149,8 @@ namespace Paint
         {
             if(mainView.IsEllipse ||
                 mainView.IsLine ||
-                mainView.IsRectangle)
+                mainView.IsRectangle ||
+                mainView.IsText)
                 drawing = true;
             Image img = Image.FromHbitmap(mainView.WorkImage.GetHbitmap());
             tempBitmap = new Bitmap(img);

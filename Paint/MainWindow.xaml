@@ -62,10 +62,9 @@
                     <Image Source="Images/eraser.png"/>
                 </Button>
                 <Separator Height="2"/>
-                <Button ToolTip="Text">
+                <Button ToolTip="Text" Command="{Binding TextCommand}">
                     <Image Source="Images/text-recognition.png"/>
                 </Button>
-                <ComboBox ToolTip="Font Size(px)"/>
                 <Separator Height="2"/>
                 <Button ToolTip="Rectangle" Command="{Binding RectangleCommand}">
                     <Image Source="Images/rectangle.png"/>
